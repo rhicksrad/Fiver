@@ -1,0 +1,241 @@
+:root {
+  --tile-size: 60px;
+  --tile-gap: 10px;
+  --color-bg: #0b0c10;
+  --color-text: #e6f1ff;
+  --color-muted: #98a6bd;
+  --color-card: #0f1117;
+  --color-tile-border: #1b2a4a;
+  --color-absent: #2a2e35;
+  --color-present: #f59e0b; /* amber */
+  --color-correct: #10b981; /* emerald */
+  --color-key-bg: #1f2636;
+  --color-key-text: #e6f1ff;
+  --accent: #7c3aed; /* violet */
+  --accent-2: #06b6d4; /* cyan */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.35);
+  background: linear-gradient(90deg, rgba(124,58,237,0.1), rgba(6,182,212,0.08));
+}
+
+.title {
+  font-size: 24px;
+  margin: 0;
+  letter-spacing: 3px;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--color-muted);
+  letter-spacing: 1.2px;
+  margin-left: 10px;
+}
+
+.help-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn {
+  background: linear-gradient(180deg, rgba(124,58,237,0.8), rgba(6,182,212,0.9));
+  color: #0b0c10;
+  border: 0;
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.btn:hover { filter: brightness(1.05); }
+
+.toggle { display: flex; align-items: center; gap: 6px; }
+
+.app-main {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.board-wrapper { display: flex; justify-content: center; }
+
+/* Hide word count now that dictionary is stable */
+#dictCount { display: none; }
+
+/* Decorative playfield around the board */
+.board-wrapper {
+  position: relative;
+  padding: 16px;
+  border-radius: 16px;
+  background:
+    radial-gradient(60% 80% at 50% 0%, rgba(124,58,237,0.14), rgba(124,58,237,0) 60%),
+    radial-gradient(60% 80% at 50% 100%, rgba(6,182,212,0.14), rgba(6,182,212,0) 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+
+.board-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  pointer-events: none;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(124,58,237,0.18), rgba(124,58,237,0) 40%),
+              radial-gradient(120% 120% at 100% 100%, rgba(6,182,212,0.18), rgba(6,182,212,0) 40%);
+  opacity: 0.7;
+  filter: blur(18px);
+}
+
+.board { position: relative; z-index: 1; }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, var(--tile-size));
+  grid-template-rows: repeat(6, var(--tile-size));
+  gap: var(--tile-gap);
+}
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: 2px solid var(--color-tile-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 28px;
+  user-select: none;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.03);
+  background: var(--color-card);
+}
+
+.tile.filled { border-color: #565758; }
+
+.tile.reveal { transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+
+.tile.state-absent { background: var(--color-absent); border-color: var(--color-absent); color: #c7c7cc; }
+.tile.state-present { background: var(--color-present); border-color: var(--color-present); color: #0b0c10; }
+.tile.state-correct { background: var(--color-correct); border-color: var(--color-correct); color: #0b0c10; }
+
+.keyboard-wrapper { display: flex; justify-content: center; }
+
+.keyboard {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 7px;
+  width: 100%;
+}
+
+.key-row { display: flex; gap: 6px; justify-content: center; }
+
+.key {
+  background: #2f3032;
+  color: var(--color-key-text);
+  padding: 8px 10px;
+  border-radius: 6px;
+  min-width: 36px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #2a2a2b;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+.key[data-state="present"] { background: var(--color-present); color: #0b0c10; }
+.key[data-state="correct"] { background: var(--color-correct); color: #0b0c10; }
+.key[data-state="absent"] {
+  background: #1f1f21;
+  color: #8a8b8e;
+  border-color: #151516;
+  filter: saturate(0.3) brightness(0.9);
+}
+.key[data-state="absent"]::before {
+  content: "";
+  position: absolute;
+  left: -10%;
+  top: 50%;
+  width: 120%;
+  height: 2px;
+  background: #6a6b6e;
+  opacity: 0.6;
+  transform: rotate(-22deg);
+  pointer-events: none;
+}
+
+.key.wide { min-width: 64px; padding: 10px 12px; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.toast.show { opacity: 1; }
+
+@media (max-width: 420px) {
+  :root { --tile-size: 48px; --tile-gap: 8px; }
+  .title { font-size: 18px; letter-spacing: 2px; }
+  .subtitle { display: none; }
+  .app-main { padding: 10px; gap: 14px; }
+  .key { min-width: 30px; padding: 10px 8px; font-size: 14px; }
+  .key.wide { min-width: 56px; }
+}
+
+@media (max-width: 340px) {
+  :root { --tile-size: 42px; --tile-gap: 6px; }
+  .key { min-width: 26px; padding: 9px 6px; font-size: 13px; }
+  .key.wide { min-width: 50px; }
+}
+
+

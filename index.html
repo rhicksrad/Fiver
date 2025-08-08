@@ -1,0 +1,41 @@
+ h<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>FIVER — Five-Letter Word Game</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1 class="title">FIVER</h1>
+      <span class="subtitle" aria-hidden="true">Five‑letter word game</span>
+      <div class="controls">
+        <span id="dictCount" aria-live="polite"></span>
+        <button id="newGameBtn" class="btn">New Game</button>
+        <label class="toggle">
+          <input id="dailyMode" type="checkbox" />
+          <span title="Daily mode picks the same word for everyone today. Off = random word.">Daily</span>
+        </label>
+      </div>
+      <div class="help-text" role="note">ℹ️ Daily picks the same seeded word for everyone today. Turn it off for a random word.</div>
+    </header>
+
+    <main class="app-main">
+      <section class="board-wrapper">
+        <div id="board" class="board" aria-label="Game board" role="grid"></div>
+      </section>
+      <section class="keyboard-wrapper">
+        <div id="keyboard" class="keyboard" aria-label="On-screen keyboard"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script defer src="./data/allowed_words.js"></script>
+    <script defer src="./main.js"></script>
+  </body>
+  
+  </html>
+
+

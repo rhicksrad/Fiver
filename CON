@@ -1,0 +1,25 @@
+farts
+    "farts",
+= : The term '=' is not recognized as the name of a cmdlet, function, script file, or operable program. 
+Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:1 char:2
++  = Get-Content -Raw .\data\allowed_words.json | ConvertFrom-Json; if  ...
++  ~
+    + CategoryInfo          : ObjectNotFound: (=:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+-contains : The term '-contains' is not recognized as the name of a cmdlet, function, script file, or 
+operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:1 char:72
++ ...  .\data\allowed_words.json | ConvertFrom-Json; if ( -contains 'farts' ...
++                                                         ~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (-contains:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundEAt line:1 char:69
++ ... ontent -Raw .\data\allowed_words.json | ConvertFrom-Json; ( | Where-O ...
++                                                                 ~
+An empty pipe element is not allowed.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : EmptyPipeElement
+ 
