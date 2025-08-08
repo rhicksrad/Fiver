@@ -1,0 +1,3 @@
+﻿# Add one lowercase word per line. Only letters a-z will be considered.
+# Example custom entries:
+farts
